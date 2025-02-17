@@ -1,0 +1,50 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tux Clicker</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #counter {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        #tux {
+            width: 200px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tux Clicker</h1>
+        <div id="counter">0</div>
+        <img id="tux" src="tux.png" alt="Tux the Penguin" />
+    </div>
+    <script>
+        let count = 0;
+
+        const counterDisplay = document.getElementById('counter');
+        const tuxImage = document.getElementById('tux');
+
+        tuxImage.addEventListener('click', () => {
+            count++;
+            counterDisplay.textContent = count;
+        });
+    </script>
+</body>
+</html>
