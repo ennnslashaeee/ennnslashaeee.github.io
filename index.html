@@ -49,20 +49,19 @@
             cursor: pointer;
             font-size: 20px;
             color: #333;
-             transition: color 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         body.dark-mode #mode-toggle {
             color: #eee;
         }
 
-
         .light-mode-icon::before {
             content: "☀️";
         }
         .dark-mode-icon::before {
             content: "🌙";
-
+        }
     </style>
 </head>
 <body>
@@ -72,11 +71,10 @@
         <img id="tux" src="tux.png" alt="Tux the Penguin" />
     </div>
 
-    <button id="mode-toggle" >
+    <button id="mode-toggle">
         <span class="light-mode-icon"></span>
         <span class="dark-mode-icon" style="display: none;"></span>
     </button>
-
 
     <script>
         let count = 0;
@@ -89,15 +87,27 @@
         const lightModeIcon = modeToggle.querySelector('.light-mode-icon');
         const darkModeIcon = modeToggle.querySelector('.dark-mode-icon');
 
+        const clickSound = new Audio('tux_sound.mp3');
+        const milestoneSound = new Audio('milestone.mp3');
+        const funnySound = new Audio('funny.mp3');
+
         tuxImage.addEventListener('click', () => {
             count++;
             counterDisplay.textContent = count;
+            clickSound.play();
+
+            if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
+                milestoneSound.play();
+            }
+
+            if (count === 69 || count === 420) {
+                funnySound.play();
+            }
         });
 
         modeToggle.addEventListener('click', () => {
             darkMode = !darkMode;
             body.classList.toggle('dark-mode');
-
 
             lightModeIcon.style.display = darkMode ? 'none' : 'inline';
             darkModeIcon.style.display = darkMode ? 'inline' : 'none';
