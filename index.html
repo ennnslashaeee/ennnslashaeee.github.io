@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tux Clicker</title>
-    <link rel="icon" href="tux.png" type="image/png">  <style>
+    <link rel="icon" href="tux.png" type="image/png">
+    <style>
         body {
             display: flex;
             justify-content: center;
@@ -12,6 +13,12 @@
             height: 100vh;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #ffffff;
         }
 
         .container {
@@ -26,7 +33,35 @@
         #tux {
             width: 200px;
             cursor: pointer;
+            transition: transform 0.2s ease;
         }
+        #tux:active {
+            transform: scale(0.95);
+        }
+
+        #mode-toggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+             transition: color 0.3s ease;
+        }
+
+        body.dark-mode #mode-toggle {
+            color: #eee;
+        }
+
+
+        .light-mode-icon::before {
+            content: "☀️";
+        }
+        .dark-mode-icon::before {
+            content: "🌙";
+
     </style>
 </head>
 <body>
@@ -35,16 +70,41 @@
         <div id="counter">0</div>
         <img id="tux" src="tux.png" alt="Tux the Penguin" />
     </div>
+
+    <button id="mode-toggle" >
+        <span class="light-mode-icon"></span>
+        <span class="dark-mode-icon" style="display: none;"></span>
+    </button>
+
+
     <script>
         let count = 0;
+        let darkMode = false;
 
         const counterDisplay = document.getElementById('counter');
         const tuxImage = document.getElementById('tux');
+        const modeToggle = document.getElementById('mode-toggle');
+        const body = document.body;
+        const lightModeIcon = modeToggle.querySelector('.light-mode-icon');
+        const darkModeIcon = modeToggle.querySelector('.dark-mode-icon');
 
         tuxImage.addEventListener('click', () => {
             count++;
             counterDisplay.textContent = count;
         });
+
+        modeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            body.classList.toggle('dark-mode');
+
+
+            lightModeIcon.style.display = darkMode ? 'none' : 'inline';
+            darkModeIcon.style.display = darkMode ? 'inline' : 'none';
+        });
+
+        lightModeIcon.style.display = 'inline';
+        darkModeIcon.style.display = 'none';
+
     </script>
 </body>
 </html>
