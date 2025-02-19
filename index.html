@@ -64,6 +64,38 @@
         .dark-mode-icon::before {
             content: "🌙";
         }
+
+        #reset-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #reset-button:hover {
+            background-color: #cc0000;
+        }
+
+        #skin-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        #skin-selector select {
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -78,10 +110,20 @@
         <span class="dark-mode-icon" style="display: none;"></span>
     </button>
 
+    <button id="reset-button">Reset</button>
+
+    <div id="skin-selector">
+        <select id="skin-dropdown">
+            <option value="tux.png">Classic Tux</option>
+            <option value="tux2.png">Mad Tux</option>
+            <option value="tux3.png">Girl Tux</option>
+            </select>
+    </div>
+
     <script>
-        // Load saved data or initialize
         let count = parseInt(localStorage.getItem('tuxCount')) || 0;
         let darkMode = localStorage.getItem('darkMode') === 'true';
+        let currentSkin = localStorage.getItem('tuxSkin') || 'tux.png'; 
 
         const counterDisplay = document.getElementById('counter');
         const tuxImage = document.getElementById('tux');
@@ -89,15 +131,16 @@
         const body = document.body;
         const lightModeIcon = modeToggle.querySelector('.light-mode-icon');
         const darkModeIcon = modeToggle.querySelector('.dark-mode-icon');
+        const resetButton = document.getElementById('reset-button');
+        const skinDropdown = document.getElementById('skin-dropdown');
 
         const clickSound = new Audio('tux_sound.mp3');
         const milestoneSound = new Audio('nvidia.mp3');
         const funnySound = new Audio('funny.mp3');
 
-        // Set initial display
         counterDisplay.textContent = count;
+        tuxImage.src = currentSkin; // Set initial skin
 
-        // Apply saved dark mode
         if (darkMode) {
             body.classList.add('dark-mode');
             lightModeIcon.style.display = 'none';
@@ -111,7 +154,6 @@
             count++;
             counterDisplay.textContent = count;
             clickSound.play();
-
             localStorage.setItem('tuxCount', count);
 
             if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
@@ -126,11 +168,21 @@
         modeToggle.addEventListener('click', () => {
             darkMode = !darkMode;
             body.classList.toggle('dark-mode');
-
             lightModeIcon.style.display = darkMode ? 'none' : 'inline';
             darkModeIcon.style.display = darkMode ? 'inline' : 'none';
-
             localStorage.setItem('darkMode', darkMode);
+        });
+
+        resetButton.addEventListener('click', () => {
+            count = 0;
+            counterDisplay.textContent = count;
+            localStorage.setItem('tuxCount', 0);
+        });
+
+        skinDropdown.addEventListener('change', () => {
+            currentSkin = skinDropdown.value;
+            tuxImage.src = currentSkin;
+            localStorage.setItem('tuxSkin', currentSkin);
         });
     </script>
 </body>
