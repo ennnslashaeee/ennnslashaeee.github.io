@@ -117,13 +117,20 @@
             <option value="tux.png">Classic Tux</option>
             <option value="tux2.png">Mad Tux</option>
             <option value="tux3.png">Girl Tux</option>
+            <option value="tux4.png">"Mac-Os is linux" Tux</option>
+            <option value="tux5.png">Anarchy Tux</option>
+            <option value="tux6.png">No Russian Tux</option>
+            <option value="tux7.png">Evil Villian Tux</option>
+            <option value="tux8.png">Parry Hotter Tux </option>
+            <option value="tux9.png">Wheres The Ring Tux</option>
+            <option value="tux10.png">I use Arch btw Tux</option>
             </select>
     </div>
 
     <script>
         let count = parseInt(localStorage.getItem('tuxCount')) || 0;
         let darkMode = localStorage.getItem('darkMode') === 'true';
-        let currentSkin = localStorage.getItem('tuxSkin') || 'tux.png'; 
+        let currentSkin = localStorage.getItem('tuxSkin') || 'tux.png';
 
         const counterDisplay = document.getElementById('counter');
         const tuxImage = document.getElementById('tux');
