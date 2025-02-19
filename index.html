@@ -17,36 +17,30 @@
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow: hidden;
         }
-
         /* Dark mode styles */
         body.dark-mode {
             background-color: #1e1e1e;
             color: #ffffff;
         }
-
         /* Container for the main content */
         .container {
             text-align: center;
         }
-
         /* Styling for the counter display */
         #counter {
             font-size: 48px;
             margin-bottom: 20px;
         }
-
         /* Styling for the Tux image */
         #tux {
             width: 200px;
             cursor: pointer;
             transition: transform 0.2s ease;
         }
-
         /* Scale down Tux when clicked */
         #tux:active {
             transform: scale(0.95);
         }
-
         /* Styling for the mode toggle button */
         #mode-toggle {
             position: absolute;
@@ -59,21 +53,17 @@
             color: #333;
             transition: color 0.3s ease;
         }
-
         /* Dark mode styles for the mode toggle button */
         body.dark-mode #mode-toggle {
             color: #eee;
         }
-
         /* Icons for light and dark mode */
         .light-mode-icon::before {
             content: "☀️";
         }
-
         .dark-mode-icon::before {
             content: "🌙";
         }
-
         /* Styling for the reset button */
         #reset-button {
             position: absolute;
@@ -88,12 +78,11 @@
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
-
         /* Hover effect for the reset button */
         #reset-button:hover {
             background-color: #cc0000;
-        }
 
+        }
         /* Styling for the skin selector dropdown */
         #skin-selector {
             position: absolute;
@@ -104,12 +93,10 @@
             border-radius: 5px;
             background-color: white;
         }
-
         /* Styling for the skin selector dropdown options */
         #skin-selector select {
             padding: 5px;
         }
-
         /* Footer styling */
         footer {
             position: absolute;
@@ -127,14 +114,11 @@
         <div id="counter">0</div>
         <img id="tux" src="tux.png" alt="Tux the Penguin" />
     </div>
-
     <button id="mode-toggle">
         <span class="light-mode-icon"></span>
         <span class="dark-mode-icon" style="display: none;"></span>
     </button>
-
     <button id="reset-button">Reset</button>
-
     <div id="skin-selector">
         <select id="skin-dropdown">
             <option value="tux.png">Classic Tux</option>
@@ -144,16 +128,14 @@
             <option value="tux5.png">Anarchy Tux</option>
             <option value="tux6.png">No Russian Tux</option>
             <option value="tux7.png">Evil Villian Tux</option>
-            <option value="tux8.png">Parry Hotter Tux</option>
+            <option value="tux8.png ">Parry Hotter Tux</option>
             <option value="tux9.png">Wheres The Ring Tux</option>
             <option value="tux10.png">I use Arch btw Tux</option>
         </select>
     </div>
-
     <footer>
         <a href="https://github.com/ennnslashaeee/ennnslashaeee.github.io" target="_blank">View the source on GitHub | made by n/a 🩵 </a>
     </footer>
-
     <script>
         // Initialize count, dark mode, and current skin from local storage
         let count = parseInt(localStorage.getItem('tuxCount')) || 0;
@@ -177,7 +159,8 @@
 
         // Update the counter display and Tux image source
         counterDisplay.textContent = count;
-        tuxImage.src = currentSkin; 
+        tuxImage.src = currentSkin;
+        skinDropdown.value = currentSkin; // Set the dropdown to the current skin
 
         // Set the initial mode based on local storage
         if (darkMode) {
@@ -188,25 +171,24 @@
             lightModeIcon.style.display = 'inline';
             darkModeIcon.style.display = 'none';
         }
-
-        // Event listener for Tux 
+        // Event listener for Tux
         tuxImage.addEventListener('click', () => {
             count++;
             counterDisplay.textContent = count;
             clickSound.play();
             localStorage.setItem('tuxCount', count);
 
-            // fuck nvidia
+            // Trigger sounds at milestones
             if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
                 milestoneSound.play();
+
             }
 
-            // for the sillys
+            // Play funny sound at specific counts
             if (count === 69 || count === 420) {
                 funnySound.play();
             }
         });
-
         // Event listener for mode toggle button
         modeToggle.addEventListener('click', () => {
             darkMode = !darkMode;
@@ -215,14 +197,12 @@
             darkModeIcon.style.display = darkMode ? 'inline' : 'none';
             localStorage.setItem('darkMode', darkMode);
         });
-
         // Event listener for reset button
         resetButton.addEventListener('click', () => {
             count = 0;
             counterDisplay.textContent = count;
             localStorage.setItem('tuxCount', 0);
         });
-
         // Event listener for skin selector dropdown
         skinDropdown.addEventListener('change', () => {
             currentSkin = skinDropdown.value;
