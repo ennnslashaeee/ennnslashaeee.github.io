@@ -36,6 +36,7 @@
             cursor: pointer;
             transition: transform 0.2s ease;
         }
+
         #tux:active {
             transform: scale(0.95);
         }
@@ -59,6 +60,7 @@
         .light-mode-icon::before {
             content: "☀️";
         }
+
         .dark-mode-icon::before {
             content: "🌙";
         }
@@ -77,8 +79,9 @@
     </button>
 
     <script>
-        let count = 0;
-        let darkMode = false;
+        // Load saved data or initialize
+        let count = parseInt(localStorage.getItem('tuxCount')) || 0;
+        let darkMode = localStorage.getItem('darkMode') === 'true';
 
         const counterDisplay = document.getElementById('counter');
         const tuxImage = document.getElementById('tux');
@@ -91,10 +94,25 @@
         const milestoneSound = new Audio('nvidia.mp3');
         const funnySound = new Audio('funny.mp3');
 
+        // Set initial display
+        counterDisplay.textContent = count;
+
+        // Apply saved dark mode
+        if (darkMode) {
+            body.classList.add('dark-mode');
+            lightModeIcon.style.display = 'none';
+            darkModeIcon.style.display = 'inline';
+        } else {
+            lightModeIcon.style.display = 'inline';
+            darkModeIcon.style.display = 'none';
+        }
+
         tuxImage.addEventListener('click', () => {
             count++;
             counterDisplay.textContent = count;
             clickSound.play();
+
+            localStorage.setItem('tuxCount', count);
 
             if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
                 milestoneSound.play();
@@ -111,11 +129,9 @@
 
             lightModeIcon.style.display = darkMode ? 'none' : 'inline';
             darkModeIcon.style.display = darkMode ? 'inline' : 'none';
+
+            localStorage.setItem('darkMode', darkMode);
         });
-
-        lightModeIcon.style.display = 'inline';
-        darkModeIcon.style.display = 'none';
-
     </script>
 </body>
 </html>
