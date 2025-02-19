@@ -81,6 +81,7 @@
         /* Hover effect for the reset button */
         #reset-button:hover {
             background-color: #cc0000;
+
         }
         /* Styling for the skin selector dropdown */
         #skin-selector {
@@ -111,7 +112,7 @@
     <div class="container">
         <h1>Tux Clicker</h1>
         <div id="counter">0</div>
-        <img id="tux" src="tux.png" alt="Tux the Penguin " />
+        <img id="tux" src="tux.png" alt="Tux the Penguin" />
     </div>
     <button id="mode-toggle">
         <span class="light-mode-icon"></span>
@@ -183,9 +184,8 @@
 
             // Trigger sounds at milestones
             if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
-                if (count !== 420) {
-                    milestoneSound.play();
-                }
+                milestoneSound.play();
+
             }
 
             // Play funny sound at specific counts
@@ -208,7 +208,7 @@
             localStorage.setItem('tuxCount', 0);
         });
         // Event listener for skin selector dropdown
-        skinDropdown.addEventListener(' change', () => {
+        skinDropdown.addEventListener('change', () => {
             currentSkin = skinDropdown.value;
             tuxImage.src = currentSkin;
             localStorage.setItem('tuxSkin', currentSkin);
