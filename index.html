@@ -42,7 +42,7 @@
             transform: scale(0.95);
         }
         /* Styling for the mode toggle button */
-        #mode-toggle {
+        #mode-toggle, #mute-button {
             position: absolute;
             bottom: 20px;
             right: 20px;
@@ -64,6 +64,13 @@
         .dark-mode-icon::before {
             content: "🌑";
         }
+        /* Mute button icon */
+        .mute-icon::before {
+            content: "🔇";
+        }
+        .unmute-icon::before {
+            content: "🔊";
+        }
         /* Styling for the reset button */
         #reset-button {
             position: absolute;
@@ -81,7 +88,6 @@
         /* Hover effect for the reset button */
         #reset-button:hover {
             background-color: #cc0000;
-
         }
         /* Styling for the skin selector dropdown */
         #skin-selector {
@@ -92,10 +98,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: white;
-        }
-        /* Styling for the skin selector dropdown options */
-        #skin-selector select {
-            padding: 5px;
         }
         /* Footer styling */
         footer {
@@ -118,6 +120,7 @@
         <span class="light-mode-icon"></span>
         <span class="dark-mode-icon" style="display: none;"></span>
     </button>
+    <button id="mute-button" class="unmute-icon"></button>
     <button id="reset-button">Reset</button>
     <div id="skin-selector">
         <select id="skin-dropdown">
@@ -126,9 +129,9 @@
             <option value="tux3.png">Girl Tux</option>
             <option value="tux4.png">"Mac-Os is linux" Tux</option>
             <option value="tux5.png">Anarchy Tux</option>
-            <option value="tux6.png">No Russian Tux</option>
+            <option value="tux 6.png">No Russian Tux</option>
             <option value="tux7.png">Evil Villian Tux</option>
-            <option value="tux8.png ">Parry Hotter Tux</option>
+            <option value="tux8.png">Parry Hotter Tux</option>
             <option value="tux9.png">Wheres The Ring Tux</option>
             <option value="tux10.png">I use Arch btw Tux</option>
             <option value="tux11.png">Linus Tux</option>
@@ -142,15 +145,17 @@
         <a href="https://github.com/ennnslashaeee/ennnslashaeee.github.io" target="_blank">View the source on GitHub | made by n/a 🩵</a>
     </footer>
     <script>
-        // Initialize count, dark mode, and current skin from local storage
+        // Initialize count, dark mode, current skin, and mute state from local storage
         let count = parseInt(localStorage.getItem('tuxCount')) || 0;
         let darkMode = localStorage.getItem('darkMode') === 'true';
         let currentSkin = localStorage.getItem('tuxSkin') || 'tux.png';
+        let isMuted = localStorage.getItem('isMuted') === 'true';
 
         // Get references to DOM elements
         const counterDisplay = document.getElementById('counter');
         const tuxImage = document.getElementById('tux');
         const modeToggle = document.getElementById('mode-toggle');
+        const muteButton = document.getElementById('mute-button');
         const body = document.body;
         const lightModeIcon = modeToggle.querySelector('.light-mode-icon');
         const darkModeIcon = modeToggle.querySelector('.dark-mode-icon');
@@ -167,7 +172,7 @@
         tuxImage.src = currentSkin;
         skinDropdown.value = currentSkin; // Set the dropdown to the current skin
 
-        // Set the initial mode based on local storage
+        // Set the initial mode and mute state based on local storage
         if (darkMode) {
             body.classList.add('dark-mode');
             lightModeIcon.style.display = 'none';
@@ -176,22 +181,24 @@
             lightModeIcon.style.display = 'inline';
             darkModeIcon.style.display = 'none';
         }
+        muteButton.classList.toggle('mute-icon', isMuted);
+        muteButton.classList.toggle('unmute-icon', !isMuted);
+
         // Event listener for Tux
         tuxImage.addEventListener('click', () => {
             count++;
             counterDisplay.textContent = count;
-            clickSound.play();
+            if (!isMuted) clickSound.play();
             localStorage.setItem('tuxCount', count);
 
             // Trigger sounds at milestones
             if (count % 10 === 0 || count % 100 === 0 || count % 1000 === 0) {
-                milestoneSound.play();
-
+                if (!isMuted) milestoneSound.play();
             }
 
             // Play funny sound at specific counts
             if (count === 69 || count === 420) {
-                funnySound.play();
+                if (!isMuted) funnySound.play();
             }
         });
         // Event listener for mode toggle button
@@ -202,6 +209,13 @@
             darkModeIcon.style.display = darkMode ? 'inline' : 'none';
             localStorage.setItem('darkMode', darkMode);
         });
+        // Event listener for mute button
+        muteButton.addEventListener('click', () => {
+            isMuted = !isMuted;
+            muteButton.classList.toggle('mute-icon', isMuted);
+            muteButton.classList.toggle('unmute-icon', !isMuted);
+            localStorage.setItem('isMuted', isMuted);
+        });
         // Event listener for reset button
         resetButton.addEventListener('click', () => {
             count = 0;
@@ -210,7 +224,7 @@
         });
         // Event listener for skin selector dropdown
         skinDropdown.addEventListener('change', () => {
-            currentSkin = skinDropdown.value;
+            currentSkin = skin Dropdown.value;
             tuxImage.src = currentSkin;
             localStorage.setItem('tuxSkin', currentSkin);
         });
